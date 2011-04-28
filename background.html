@@ -1,0 +1,41 @@
+<script>
+
+	function onClickViewPage(info, tab)
+	{
+		var url = "http://webcache.googleusercontent.com/search?q=cache:" + info.pageUrl;
+		chrome.tabs.create({'url': url});
+	}
+	
+	function onClickViewLink(info, tab)
+	{
+		linkUrl = HandleSpecialUrls(info.linkUrl);
+		var url = "http://webcache.googleusercontent.com/search?q=cache:" + linkUrl;
+		chrome.tabs.create({'url': url});
+	}
+	
+	function HandleSpecialUrls(linkUrl)
+	{
+		if (linkUrl.indexOf('http://www.google.com/') == -1)
+		{
+			return linkUrl;
+		}
+		urlBeginIndex = linkUrl.indexOf('&url=');
+		if (urlBeginIndex == -1)
+		{
+			return linkUrl;
+		}
+		urlBeginIndex += 5;
+		urlEndIndex = linkUrl.indexOf('&', urlBeginIndex);
+		if (urlEndIndex == -1)
+		{
+			urlEndIndex = linkUrl.length - 1;
+		}
+		return linkUrl.slice(urlBeginIndex, urlEndIndex);
+	}
+
+	chrome.contextMenus.create({"title": "View current page in Google Cache", "contexts": ["page"],
+								"onclick": onClickViewPage});
+	chrome.contextMenus.create({"title": "View link in Google Cache", "contexts": ["link"],
+								"onclick": onClickViewLink});
+</script>
+http://www.google.com/url?sa=t&source=web&cd=13&ved=0CDQQFjACOAo&url=http%3A%2F%2Fflickrnet.codeplex.com%2F&ei=JpQ9Td_HMcHogQfTy7CdCA&usg=AFQjCNHMXmIeCUw3ZEcYrOv18-D6Ant9lA

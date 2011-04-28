@@ -1,0 +1,15 @@
+{
+	"name": "View Link in Google Cache",
+	"version": "1.0",
+	"description": "Open the selected link from Google Cache",
+	"permissions":
+	[
+		"tabs",
+		"contextMenus"
+	],
+	"icons": 
+	{
+		"16": "transparent.png"
+	},
+	"background_page": "background.html"
+}
